@@ -12,11 +12,12 @@ public class RateCalculator {
     public static final String STAMP = "stamp";
     public static final String METER = "meter";
     public static final String POSTAL_INDICIA = "postal indicia";
-
+    public static final String WEIGHT_EXCEPTION = "weight is out of range";
+    public static final String TYPE_EXCEPTION = "invalid type";
 
     public static double getRate(String nation, String type, double weight) {
         if (weight > 500 || weight < 0) {
-            throw new InvalidParameterException("weight is out of range");
+            throw new InvalidParameterException(WEIGHT_EXCEPTION);
         }
         if (nation.toLowerCase().equals(CANADA)) {
             switch (type.toLowerCase()) {
@@ -42,7 +43,7 @@ public class RateCalculator {
                     if (weight <= 50)
                         return 1.20;
                     else
-                        throw new InvalidParameterException("weight is out of range for special stamps");
+                        throw new InvalidParameterException(WEIGHT_EXCEPTION);
                 case METER:
                     if (weight <= 30)
                         return 0.80;
@@ -76,7 +77,7 @@ public class RateCalculator {
                         return 4.74;
                     break;
                 default:
-                    throw new InvalidParameterException("invalid type");
+                    throw new InvalidParameterException(TYPE_EXCEPTION);
             }
         } else if (nation.toLowerCase().equals(USA)) {
             switch (type.toLowerCase()) {
@@ -117,7 +118,7 @@ public class RateCalculator {
                         return 9.69;
                     break;
                 default:
-                    throw new InvalidParameterException("invalid type");
+                    throw new InvalidParameterException(TYPE_EXCEPTION);
             }
         } else {//International
             switch (type.toLowerCase()) {
@@ -158,7 +159,7 @@ public class RateCalculator {
                         return 19.39;
                     break;
                 default:
-                    throw new InvalidParameterException("invalid type");
+                    throw new InvalidParameterException(TYPE_EXCEPTION);
             }
         }
         throw new RuntimeException("Weird error");
