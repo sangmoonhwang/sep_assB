@@ -7,7 +7,7 @@ import java.security.InvalidParameterException;
  */
 public class RateCalculator {
     public static final String CANADA = "canada";
-    public static final String USA = "united state";
+    public static final String USA = "usa";
     public static final String STAMP_SPECIAL = "stamp special";
     public static final String STAMP = "stamp";
     public static final String METER = "meter";

@@ -10,19 +10,19 @@ import static org.junit.Assert.*;
 public class ValidUnitTest {
 
     @Test
-    public void canadaSingleStampsStandards() throws Exception {
-        for (int weight = 0; weight <= 30; weight++)
-            assertEquals(RateCalculator.getRate("canada", "stamp", weight), 1.00, 0.001);
-        for (int weight = 31; weight <= 50; weight++)
-            assertEquals(RateCalculator.getRate("canada", "stamp", weight), 1.20, 0.001);
-    }
-
-    @Test
     public void canadaSpecialStamps() throws Exception {
         for (int weight = 0; weight <= 30; weight++)
             assertEquals(RateCalculator.getRate("canada", "stamp special", weight), 0.85, 0.001);
         for (int weight = 31; weight <= 50; weight++)
             assertEquals(RateCalculator.getRate("canada", "stamp special", weight), 1.20, 0.001);
+    }
+
+    @Test
+    public void canadaSingleStampsStandards() throws Exception {
+        for (int weight = 0; weight <= 30; weight++)
+            assertEquals(RateCalculator.getRate("canada", "stamp", weight), 1.00, 0.001);
+        for (int weight = 31; weight <= 50; weight++)
+            assertEquals(RateCalculator.getRate("canada", "stamp", weight), 1.20, 0.001);
     }
 
     @Test
@@ -81,5 +81,59 @@ public class ValidUnitTest {
             assertEquals(RateCalculator.getRate("canada", "postal indicia", weight), 2.77, 0.001);
         for (int weight = 201; weight <= 300; weight++)
             assertEquals(RateCalculator.getRate("canada", "postal indicia", weight), 3.89, 0.001);
+    }
+
+    @Test
+    public void usaSingleStampsStandards() throws Exception {
+        for (int weight = 0; weight <= 30; weight++)
+            assertEquals(RateCalculator.getRate("usa", "stamp", weight), 1.20, 0.001);
+        for (int weight = 31; weight <= 50; weight++)
+            assertEquals(RateCalculator.getRate("usa", "stamp", weight), 1.80, 0.001);
+    }
+
+    @Test
+    public void usaStampsNonStandards() {
+        for (int weight = 51; weight <= 100; weight++)
+            assertEquals(RateCalculator.getRate("usa", "stamp", weight), 2.95, 0.001);
+        for (int weight = 101; weight <= 200; weight++)
+            assertEquals(RateCalculator.getRate("usa", "stamp", weight), 5.15, 0.001);
+        for (int weight = 201; weight <= 500; weight++)
+            assertEquals(RateCalculator.getRate("usa", "stamp", weight), 10.30, 0.001);
+    }
+
+    @Test
+    public void usaMeterStandards() {
+        for (int weight = 0; weight <= 30; weight++)
+            assertEquals(RateCalculator.getRate("usa", "meter", weight), 1.19, 0.001);
+        for (int weight = 31; weight <= 50; weight++)
+            assertEquals(RateCalculator.getRate("usa", "meter", weight), 1.72, 0.001);
+    }
+
+    @Test
+    public void usaMeterNonStandards() {
+        for (int weight = 51; weight <= 100; weight++)
+            assertEquals(RateCalculator.getRate("usa", "meter", weight), 2.68, 0.001);
+        for (int weight = 101; weight <= 200; weight++)
+            assertEquals(RateCalculator.getRate("usa", "meter", weight), 4.85, 0.001);
+        for (int weight = 201; weight <= 500; weight++)
+            assertEquals(RateCalculator.getRate("usa", "meter", weight), 9.69, 0.001);
+    }
+
+    @Test
+    public void usaPostalIndiciaStandards() {
+        for (int weight = 0; weight <= 30; weight++)
+            assertEquals(RateCalculator.getRate("usa", "postal indicia", weight), 1.19, 0.001);
+        for (int weight = 31; weight <= 50; weight++)
+            assertEquals(RateCalculator.getRate("usa", "postal indicia", weight), 1.72, 0.001);
+    }
+
+    @Test
+    public void usaPostalIndiciaNonStandards() {
+        for (int weight = 51; weight <= 100; weight++)
+            assertEquals(RateCalculator.getRate("usa", "postal indicia", weight), 2.68, 0.001);
+        for (int weight = 101; weight <= 200; weight++)
+            assertEquals(RateCalculator.getRate("usa", "postal indicia", weight), 4.85, 0.001);
+        for (int weight = 201; weight <= 300; weight++)
+            assertEquals(RateCalculator.getRate("usa", "postal indicia", weight), 9.69, 0.001);
     }
 }
