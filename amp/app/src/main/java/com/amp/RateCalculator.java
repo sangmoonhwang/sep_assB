@@ -9,7 +9,7 @@ public class RateCalculator {
     public static final String CANADA = "canada";
     public static final String USA = "usa";
     public static final String INTERNATIONAL = "international";
-    public static final String STAMP_SPECIAL = "stamp special";
+    public static final String STAMP_SPECIAL = "stamp special"; //Stamps in booklets/coils/panes
     public static final String STAMP = "stamp";
     public static final String METER = "meter";
     public static final String POSTAL_INDICIA = "postal indicia";
