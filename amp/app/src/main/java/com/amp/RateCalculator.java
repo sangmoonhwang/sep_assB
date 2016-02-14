@@ -119,7 +119,7 @@ public class RateCalculator {
                 default:
                     throw new InvalidParameterException("invalid type");
             }
-        } else {
+        } else {//International
             switch (type.toLowerCase()) {
                 case STAMP:
                     if (weight <= 30)

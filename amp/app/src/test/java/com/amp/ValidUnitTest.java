@@ -136,4 +136,58 @@ public class ValidUnitTest {
         for (int weight = 201; weight <= 300; weight++)
             assertEquals(RateCalculator.getRate("usa", "postal indicia", weight), 9.69, 0.001);
     }
+
+    @Test
+    public void otherSingleStampsStandards() throws Exception {
+        for (int weight = 0; weight <= 30; weight++)
+            assertEquals(RateCalculator.getRate("other", "stamp", weight), 2.50, 0.001);
+        for (int weight = 31; weight <= 50; weight++)
+            assertEquals(RateCalculator.getRate("other", "stamp", weight), 3.60, 0.001);
+    }
+
+    @Test
+    public void otherStampsNonStandards() {
+        for (int weight = 51; weight <= 100; weight++)
+            assertEquals(RateCalculator.getRate("other", "stamp", weight), 5.90, 0.001);
+        for (int weight = 101; weight <= 200; weight++)
+            assertEquals(RateCalculator.getRate("other", "stamp", weight), 10.30, 0.001);
+        for (int weight = 201; weight <= 500; weight++)
+            assertEquals(RateCalculator.getRate("other", "stamp", weight), 20.60, 0.001);
+    }
+
+    @Test
+    public void otherMeterStandards() {
+        for (int weight = 0; weight <= 30; weight++)
+            assertEquals(RateCalculator.getRate("other", "meter", weight), 2.36, 0.001);
+        for (int weight = 31; weight <= 50; weight++)
+            assertEquals(RateCalculator.getRate("other", "meter", weight), 3.42, 0.001);
+    }
+
+    @Test
+    public void otherMeterNonStandards() {
+        for (int weight = 51; weight <= 100; weight++)
+            assertEquals(RateCalculator.getRate("other", "meter", weight), 5.56, 0.001);
+        for (int weight = 101; weight <= 200; weight++)
+            assertEquals(RateCalculator.getRate("other", "meter", weight), 9.69, 0.001);
+        for (int weight = 201; weight <= 500; weight++)
+            assertEquals(RateCalculator.getRate("other", "meter", weight), 19.39, 0.001);
+    }
+
+    @Test
+    public void otherPostalIndiciaStandards() {
+        for (int weight = 0; weight <= 30; weight++)
+            assertEquals(RateCalculator.getRate("other", "postal indicia", weight), 2.36, 0.001);
+        for (int weight = 31; weight <= 50; weight++)
+            assertEquals(RateCalculator.getRate("other", "postal indicia", weight), 3.42, 0.001);
+    }
+
+    @Test
+    public void otherPostalIndiciaNonStandards() {
+        for (int weight = 51; weight <= 100; weight++)
+            assertEquals(RateCalculator.getRate("other", "postal indicia", weight), 5.56, 0.001);
+        for (int weight = 101; weight <= 200; weight++)
+            assertEquals(RateCalculator.getRate("other", "postal indicia", weight), 9.69, 0.001);
+        for (int weight = 201; weight <= 300; weight++)
+            assertEquals(RateCalculator.getRate("other", "postal indicia", weight), 19.39, 0.001);
+    }
 }
