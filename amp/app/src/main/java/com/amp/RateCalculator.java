@@ -6,17 +6,117 @@ import java.security.InvalidParameterException;
  * Created by sangmoon on 2016-02-14.
  */
 public class RateCalculator {
-    public static final String CANADA = "canada";
-    public static final String USA = "usa";
-    public static final String INTERNATIONAL = "international";
-    public static final String STAMP_SPECIAL = "stamp special"; //Stamps in booklets/coils/panes
-    public static final String STAMP = "stamp";
-    public static final String METER = "meter";
-    public static final String POSTAL_INDICIA = "postal indicia";
+    // territories
+    public static final String CANADA = "Canada";
+    public static final String USA = "USA";
+    public static final String INTERNATIONAL = "International";
+
+    // type
+    public static final String STANDARD = "standard";
+    public static final String OTHER = "stamp"; // non standard and oversize
+    public static final String LETTER_POST = "letter-post";
+
+    // items
+    public static final String STAMP_BCP = "stamps in booklets/coils/panes "; //Stamps in booklets/coils/panes
+    public static final String STAMP = "stamp(s)";
+    public static final String METER_OR_POSTALINDICIA = "meter";
+    public static final String SINGLE_STAMP = "single stamp";
+
     public static final String WEIGHT_EXCEPTION = "weight is out of range";
     public static final String TYPE_EXCEPTION = "invalid type";
 
-    public static double getRate(String nation, String type, double weight) {
+
+    // compute the rate
+    public double getRate(String country_destination, String type, String item, double weight) {
+
+        // weight must be greater than 0 or less or equal to 500
+        // otherwise return an exception
+        if (weight >= 500 || weight < 0) {
+            throw new InvalidParameterException(WEIGHT_EXCEPTION);
+        }
+
+
+        if (country_destination.equals(CANADA)) {
+            if (type.equals(STANDARD)) {
+                    switch (item) {
+                        case STAMP_BCP:
+                            // Canada, standard, Stamps in booklets/coils/panes, Up to 30 g
+                            if (weight > 0 && weight <= 30) return 0.85;
+                            // over 30, up to 50
+                            else if(weight > 30 && weight <= 50) return 1.20;
+                            // case of meter or postal Indicia
+                        case METER_OR_POSTALINDICIA:
+                            // up to 30 g
+                            if (weight > 0 && weight <= 30) return 0.80;
+
+                            // over 30 up to 50
+                            else if(weight > 30 && weight <= 50) return 1.19;
+                            // case sinple stamp
+                        case SINGLE_STAMP:
+                            // up to 30
+                            if (weight > 0 && weight <= 30) return 1.00;
+                            //over 30, up to 50
+                            else if(weight > 30 && weight <= 50) return 1.20;
+                    }
+            }
+
+            // if Other (non standard, oversize)
+            else{
+
+                switch (item){
+                    // stamp
+                    case STAMP:
+                        // greater than 50, less or equal to 100
+                        if (weight > 50 && weight <= 100) return 2.95;
+                            // greater than 100, less or equal to 200
+                        else if (weight > 100 && weight <= 200) return 5.15;
+                            // greater than 200, up to 500
+                        else if (weight > 200 && weight <= 500) return 10.30;
+                        //case meter or postal indicia
+                    case METER_OR_POSTALINDICIA:
+                        // over 50 up to 100
+                        if (weight > 50 && weight <= 100) return 2.68;
+                            // greater than 100, less or equal to 200
+                        else if (weight > 100 && weight <= 200) return 4.85;
+                            // greater than 200, up to 500
+                        else if (weight > 200 && weight <= 500) return 9.69;
+                }
+
+            }
+        }
+        return 0.0;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
         if (weight > 500 || weight < 0) {
             throw new InvalidParameterException(WEIGHT_EXCEPTION);
         }
@@ -165,4 +265,6 @@ public class RateCalculator {
         }
         throw new RuntimeException("Weird error");
     }
-}
+    */
+
+
