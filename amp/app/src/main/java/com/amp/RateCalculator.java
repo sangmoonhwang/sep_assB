@@ -6,21 +6,22 @@ import java.security.InvalidParameterException;
  * Created by sangmoon on 2016-02-14.
  */
 public class RateCalculator {
+    // DO NOT MODIFY THE FORMAT OF THOSE STRINGS
     // territories
     public static final String CANADA = "Canada";
     public static final String USA = "USA";
     public static final String INTERNATIONAL = "International";
 
     // type
-    public static final String STANDARD = "standard";
-    public static final String OTHER = "stamp"; // non standard and oversize
-    public static final String LETTER_POST = "letter-post";
+    public static final String STANDARD = "Standard Letters and cards";
+    public static final String OTHER = "Other (Non-standard and Oversize)"; // non standard and oversize
+    public static final String LETTER_POST = "Letter-post";
 
     // items
-    public static final String STAMP_BCP = "stamps in booklets/coils/panes "; //Stamps in booklets/coils/panes
-    public static final String STAMP = "stamp(s)";
-    public static final String METER_OR_POSTALINDICIA = "meter";
-    public static final String SINGLE_STAMP = "single stamp";
+    public static final String STAMP_BCP = "Stamps in booklets/coils/panes"; //Stamps in booklets/coils/panes
+    public static final String STAMP = "Stamp(s)";
+    public static final String METER_OR_POSTALINDICIA = "Meter or Postal Indicia";
+    public static final String SINGLE_STAMP = "Single Stamps";
 
     public static final String WEIGHT_EXCEPTION = "weight is out of range";
     public static final String TYPE_EXCEPTION = "invalid type";
@@ -31,10 +32,6 @@ public class RateCalculator {
 
         // weight must be greater than 0 or less or equal to 500
         // otherwise return an exception
-        if (weight >= 500 || weight < 0) {
-            throw new InvalidParameterException(WEIGHT_EXCEPTION);
-        }
-
 
         if (country_destination.equals(CANADA)) {
             if (type.equals(STANDARD)) {
@@ -45,18 +42,23 @@ public class RateCalculator {
                             // over 30, up to 50
                             else if(weight > 30 && weight <= 50) return 1.20;
                             // case of meter or postal Indicia
+                            else if(weight > 50)
+                                throw new InvalidParameterException(WEIGHT_EXCEPTION);
                         case METER_OR_POSTALINDICIA:
                             // up to 30 g
                             if (weight > 0 && weight <= 30) return 0.80;
 
                             // over 30 up to 50
                             else if(weight > 30 && weight <= 50) return 1.19;
+                            else if(weight > 50)
+                                throw new InvalidParameterException(WEIGHT_EXCEPTION);
                             // case sinple stamp
                         case SINGLE_STAMP:
                             // up to 30
                             if (weight > 0 && weight <= 30) return 1.00;
                             //over 30, up to 50
                             else if(weight > 30 && weight <= 50) return 1.20;
+
                     }
             }
 
@@ -73,6 +75,7 @@ public class RateCalculator {
                             // greater than 200, up to 500
                         else if (weight > 200 && weight <= 500) return 10.30;
                         //case meter or postal indicia
+
                     case METER_OR_POSTALINDICIA:
                         // over 50 up to 100
                         if (weight > 50 && weight <= 100) return 2.68;

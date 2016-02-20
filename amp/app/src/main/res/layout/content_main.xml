@@ -75,7 +75,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Weight (in g) : "
         android:id="@+id/weight_textView"
-        android:layout_alignBottom="@+id/editText"
+        android:layout_alignBottom="@+id/rate_editText"
         />
 
     <EditText
@@ -83,7 +83,7 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/rate_editText"
         android:text="30"
         android:layout_marginTop="30dp"
         android:layout_below="@+id/item_spinner"
@@ -97,7 +97,7 @@
         android:layout_height="wrap_content"
         android:text="Calculate the RATE"
         android:id="@+id/button_rate"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/rate_editText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp" />
 

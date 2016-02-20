@@ -6,13 +6,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.security.InvalidParameterException;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener
 ,View.OnClickListener{
     private ArrayAdapter<CharSequence> type_adapter, item_adapter;
-    private Spinner type_spinner,item_spinner;
+    private Spinner country_spinner, type_spinner,item_spinner;
     private boolean isCanada = true, isUSA_Intern = false;
     private String country = RateCalculator.CANADA, type = RateCalculator.STANDARD,
     item = RateCalculator.STAMP_BCP;
@@ -40,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     // set up the spinner
     void spinnerSetup() {
         // get the view of the spinners
-        Spinner country_spinner = (Spinner) findViewById(R.id.country_spinner);
+        country_spinner = (Spinner) findViewById(R.id.country_spinner);
         type_spinner = (Spinner) findViewById(R.id.type_spinner);
         item_spinner = (Spinner) findViewById(R.id.item_spinner);
 
@@ -67,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     {
         // get the id of the spinner
         // int ID = parent.getId();
+
         switch (parent.getId())
         {
             // if the country spinner is selected, check if USA or International
@@ -76,9 +80,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     type_adapter = ArrayAdapter.createFromResource(this,
                             R.array.type_Canada_array, android.R.layout.simple_spinner_item);
                     type_spinner.setAdapter(type_adapter);
-                    country = RateCalculator.CANADA;
-                    type = RateCalculator.STANDARD;
-                    item = RateCalculator.STAMP_BCP;
                     isCanada = true;
                     isUSA_Intern = false;
 
@@ -90,14 +91,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     type_spinner.setAdapter(type_adapter);
                     isCanada = false;
                     isUSA_Intern = true;
-
-                    type = RateCalculator.LETTER_POST;
-                    if (position == 1) {
-                        country = RateCalculator.USA;
-                    }
-                    else
-                        country = RateCalculator.INTERNATIONAL;
-
                 }
                 // set the dropdownView
                 type_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -113,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                     item_spinner.setAdapter(item_adapter);
 
+
                 }
                 // else it will be updated letter-post or other
                 else {
@@ -121,8 +115,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     item_spinner.setAdapter(item_adapter);
                 }
                 item_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-
         }
     }
 
@@ -140,7 +132,24 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onClick(View v) {
-        double rate = rateCalculator.getRate(country, type,item,weight);
-        rate_view.setText("The computing rate is " + rate);
+        country = country_spinner.getSelectedItem().toString();
+        type = type_spinner.getSelectedItem().toString();
+        item = item_spinner.getSelectedItem().toString();
+
+        EditText wei = (EditText) findViewById(R.id.rate_editText);
+        weight = Integer.parseInt(wei.getText().toString());
+        double rate = 0.0;
+
+        try {
+          rate  = rateCalculator.getRate(country, type,item,weight);
+        }
+        catch (InvalidParameterException e)
+        {
+            rate_view.setText("The value of Weight cannot be that big for this type");
+            return;
+        }
+
+        rate_view.setText("The computing rate is $" + rate);
+
     }
 }
