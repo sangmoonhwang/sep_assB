@@ -1,52 +1,146 @@
 package com.amp;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener
+,View.OnClickListener{
+    private ArrayAdapter<CharSequence> type_adapter, item_adapter;
+    private Spinner type_spinner,item_spinner;
+    private boolean isCanada = true, isUSA_Intern = false;
+    private String country = RateCalculator.CANADA, type = RateCalculator.STANDARD,
+    item = RateCalculator.STAMP_BCP;
+    private int weight = 30;
+    private RateCalculator rateCalculator = new RateCalculator();
+    private TextView rate_view;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        // button
+        Button button = (Button) findViewById(R.id.button_rate);
+        button.setOnClickListener(this);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        // the textview to display the computing rate
+        rate_view = (TextView) findViewById(R.id.rate_textView);
+        spinnerSetup();
+
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+
+    // set up the spinner
+    void spinnerSetup() {
+        // get the view of the spinners
+        Spinner country_spinner = (Spinner) findViewById(R.id.country_spinner);
+        type_spinner = (Spinner) findViewById(R.id.type_spinner);
+        item_spinner = (Spinner) findViewById(R.id.item_spinner);
+
+
+        // Create an ArrayAdapter for country_adpater
+        ArrayAdapter<CharSequence> country_adapter = ArrayAdapter.createFromResource(this,
+                R.array.country_array, android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+        country_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        country_spinner.setAdapter(country_adapter);
+
+        // set on itemSelectedListener
+        country_spinner.setOnItemSelectedListener(this);
+        type_spinner.setOnItemSelectedListener(this);
+        item_spinner.setOnItemSelectedListener(this);
+
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    // apply the changes to the list in the spinner
+    private void applyChanges (AdapterView<?> parent,  int position)
+    {
+        // get the id of the spinner
+        // int ID = parent.getId();
+        switch (parent.getId())
+        {
+            // if the country spinner is selected, check if USA or International
+            case R.id.country_spinner:
+                // if Canada, change the items in type spinner to be compatible with Canada
+                if (position == 0){
+                    type_adapter = ArrayAdapter.createFromResource(this,
+                            R.array.type_Canada_array, android.R.layout.simple_spinner_item);
+                    type_spinner.setAdapter(type_adapter);
+                    country = RateCalculator.CANADA;
+                    type = RateCalculator.STANDARD;
+                    item = RateCalculator.STAMP_BCP;
+                    isCanada = true;
+                    isUSA_Intern = false;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+                }
+                // if not Canada, set the type to be compatible with USA or international
+                if(position == 1 || position == 2) {
+                    type_adapter = ArrayAdapter.createFromResource(this,
+                            R.array.type_USA_Internal_array, android.R.layout.simple_spinner_item);
+                    type_spinner.setAdapter(type_adapter);
+                    isCanada = false;
+                    isUSA_Intern = true;
+
+                    type = RateCalculator.LETTER_POST;
+                    if (position == 1) {
+                        country = RateCalculator.USA;
+                    }
+                    else
+                        country = RateCalculator.INTERNATIONAL;
+
+                }
+                // set the dropdownView
+                type_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                // now when the change is made in TYPE spinner
+            case R.id.type_spinner:
+                // if is Canada and the Standard is selected,
+                // Item spinner will be updated with standard item
+                if (isCanada && position == 0)
+                {
+                    item_adapter = ArrayAdapter.createFromResource(this,
+                            R.array.item_Standard_array, android.R.layout.simple_spinner_item);
+
+                    item_spinner.setAdapter(item_adapter);
+
+                }
+                // else it will be updated letter-post or other
+                else {
+                    item_adapter = ArrayAdapter.createFromResource(this,
+                            R.array.item_general_array, android.R.layout.simple_spinner_item);
+                    item_spinner.setAdapter(item_adapter);
+                }
+                item_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
         }
+    }
 
-        return super.onOptionsItemSelected(item);
+
+    // when select an item
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+       applyChanges(parent, position);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        double rate = rateCalculator.getRate(country, type,item,weight);
+        rate_view.setText("The computing rate is " + rate);
     }
 }

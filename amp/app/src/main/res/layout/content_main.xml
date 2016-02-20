@@ -15,5 +15,101 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="COUNTRY"
+        android:id="@+id/country_textView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/country_spinner"
+        android:layout_below="@+id/country_textView"
+        android:spinnerMode="dropdown"
+        android:layout_marginTop="15dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="TYPE"
+        android:id="@+id/type_textView"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/country_spinner"
+        android:layout_marginTop="30dp"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/type_spinner"
+        android:layout_below="@+id/type_textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:spinnerMode="dropdown"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="ITEM"
+        android:id="@+id/item_textView"
+        android:layout_below="@+id/type_spinner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_spinner"
+        android:layout_below="@+id/item_textView"
+        android:layout_alignRight="@+id/type_spinner"
+        android:layout_alignEnd="@+id/type_spinner"
+        android:spinnerMode="dropdown"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Weight (in g) : "
+        android:id="@+id/weight_textView"
+        android:layout_alignBottom="@+id/editText"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:text="30"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/item_spinner"
+        android:layout_alignRight="@+id/item_spinner"
+        android:layout_alignEnd="@+id/item_spinner"
+        android:layout_alignLeft="@+id/item_textView"
+        android:layout_alignStart="@+id/item_textView" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calculate the RATE"
+        android:id="@+id/button_rate"
+        android:layout_below="@+id/editText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rate_textView"
+        android:textAlignment="center"
+        android:textSize="18dp"
+        android:textColor="@color/colorAccent"
+        android:layout_below="@+id/button_rate"
+        android:layout_marginTop="20dp"
+        />
+
 </RelativeLayout>

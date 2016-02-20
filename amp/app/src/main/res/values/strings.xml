@@ -1,4 +1,36 @@
 <resources>
     <string name="app_name">Amp</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_main_">Amp</string>
+
+    <string-array name="country_array">
+        <item>Canada</item>
+        <item>USA</item>
+        <item>International</item>
+    </string-array>
+
+    <string-array name="type_Canada_array">
+        <item>Standard Letters and cards</item>
+        <item>Other (Non-standard and Oversize)</item>
+    </string-array>
+
+    <string-array name="type_USA_Internal_array">
+        <item>Letter-post</item>
+        <item>Other (Non-standard and Oversize)</item>
+    </string-array>
+
+
+    <string-array name="item_Standard_array">
+        <item>Stamps in booklets/coils/panes</item>
+        <item>Meter or Postal Indicia</item>
+        <item>Single Stamps</item>
+    </string-array>
+
+    <string-array name="item_general_array">
+        <item>Stamp(s)</item>
+        <item>Meter or Postal Indicia</item>
+    </string-array>
+
+
+
 </resources>
