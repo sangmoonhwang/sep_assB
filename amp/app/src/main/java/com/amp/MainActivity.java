@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private boolean isCanada = true, isUSA_Intern = false;
     private String country = RateCalculator.CANADA, type = RateCalculator.STANDARD,
     item = RateCalculator.STAMP_BCP;
-    private int weight = 30;
+    private double weight = 30;
     private RateCalculator rateCalculator = new RateCalculator();
     private TextView rate_view;
 
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         item = item_spinner.getSelectedItem().toString();
 
         EditText wei = (EditText) findViewById(R.id.rate_editText);
-        weight = Integer.parseInt(wei.getText().toString());
+        weight = Double.parseDouble(wei.getText().toString());
         double rate = 0.0;
 
         try {
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         catch (InvalidParameterException e)
         {
-            rate_view.setText("The value of Weight cannot be that big for this type");
+            rate_view.setText("The value of Weight cannot be " + weight +  "g for this type");
             return;
         }
 
