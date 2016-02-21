@@ -43,15 +43,45 @@ public class RateCalculator {
         }
 
         // FOR USA
-        if (country_destination.equals(USA))
-        {
+        if (country_destination.equals(USA)) {
             return rateForUSA(type, item, weight);
+        }
+
+        if (country_destination.equals(INTERNATIONAL)) {
+            return rateForInternational(type, item, weight);
         }
         return 0.0;
     }
 
-    private double rateForUSA(String type, String item, double weight)
-    {
+    private double rateForInternational(String type, String item, double weight) {
+        if (type.equals(LETTER_POST)) {
+            switch (item) {
+                case STAMP:
+                    if (weight > 0 && weight <= 30) return 1.20;
+                    else if (weight > 30 && weight <= 50) return 1.80;
+                case METER_OR_POSTALINDICIA:
+                    // USA, standard, meter or postal Indicia, Up to 30 g
+                    if (weight > 0 && weight <= 30) return 1.19;
+                    else if (weight > 30 && weight <= 50) return 1.72;
+            }
+        } else if (type.equals(OTHER)) {
+            switch (item) {
+                case STAMP:
+                    if (weight > 50 && weight <= 100) return 2.95;
+                    else if (weight > 100 && weight <= 200) return 5.15;
+                    else if (weight > 200 && weight <= 500) return 10.30;
+                    break;
+                case METER_OR_POSTALINDICIA:
+                    if (weight > 50 && weight <= 100) return 2.68;
+                    else if (weight > 100 && weight <= 200) return 4.85;
+                    else if (weight > 200 && weight <= 500) return 9.69;
+                    break;
+            }
+        }
+        throw new InvalidParameterException(WEIGHT_EXCEPTION);
+    }
+
+    private double rateForUSA(String type, String item, double weight) {
         if (type.equals(LETTER_POST)) {
             switch (item) {
                 case STAMP:
@@ -66,9 +96,8 @@ public class RateCalculator {
                         // over 30, up to 50
                     else if (weight > 30 && weight <= 50) return 1.72;
             }
-        }
-        else if(type.equals(OTHER)) {
-            switch (item){
+        } else if (type.equals(OTHER)) {
+            switch (item) {
                 case STAMP:
                     // USA, OTHER, Stamps, over 50 Up to 100 g
                     if (weight > 50 && weight <= 100) return 2.95;
@@ -85,14 +114,10 @@ public class RateCalculator {
                         // greater than 200, less or equal to 500
                     else if (weight > 200 && weight <= 500) return 9.69;
                     break;
-
             }
         }
         throw new InvalidParameterException(WEIGHT_EXCEPTION);
-
     }
-
-
 
     private double rateForCanada(String type, String item, double weight) {
         if (type.equals(STANDARD)) {
@@ -101,30 +126,30 @@ public class RateCalculator {
                     // Canada, standard, Stamps in booklets/coils/panes, Up to 30 g
                     if (weight > 0 && weight <= 30) return 0.85;
                         // over 30, up to 50
-                    else if(weight > 30 && weight <= 50) return 1.20;
-                        // case of meter or postal Indicia
+                    else if (weight > 30 && weight <= 50) return 1.20;
+                    // case of meter or postal Indicia
                 case METER_OR_POSTALINDICIA:
                     // up to 30 g
                     if (weight > 0 && weight <= 30) return 0.80;
 
                         // over 30 up to 50
-                    else if(weight > 30 && weight <= 50) return 1.19;
-                   // case sinple stamp
+                    else if (weight > 30 && weight <= 50) return 1.19;
+                    // case sinple stamp
                 case SINGLE_STAMP:
                     // up to 30
                     if (weight > 0 && weight <= 30) return 1.00;
                         //over 30, up to 50
-                    else if(weight > 30 && weight <= 50) return 1.20;
+                    else if (weight > 30 && weight <= 50) return 1.20;
             }
         }
         // if Other (non standard, oversize)
-        else{
-            switch (item){
+        else {
+            switch (item) {
                 // stamp
                 case STAMP:
                     //greater than 50, less or equal to 100
                     if (weight > 50 && weight <= 100) return 1.80;
-                    // greater than 100, less or equal to 200
+                        // greater than 100, less or equal to 200
                     else if (weight > 100 && weight <= 200) return 2.95;
                         // greater than 200, less or equal to 300
                     else if (weight > 200 && weight <= 300) return 4.10;
@@ -156,9 +181,6 @@ public class RateCalculator {
         //return 0.0;
         throw new InvalidParameterException(WEIGHT_EXCEPTION);
     }
-
-
-
 }
 
 
