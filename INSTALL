@@ -1,1 +1,10 @@
-//TODO
+The application is only executable if installed correctly.
+--Running it on emulator:
+1. Open up an Android studio or an eclipse which supports Android development
+2. Launch an Android emulator
+3. Deploy the application to the launched emulator when it is ready
+
+--Running it on a physical Android device
+1. Open up an Android studio or an eclipse which supports Android development
+2. Connect your device to the computer (typically via USB)
+3. Deploy the application to the connected Android device
