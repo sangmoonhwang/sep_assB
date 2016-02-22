@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onClick(View v) {
+
         country = country_spinner.getSelectedItem().toString();
         type = type_spinner.getSelectedItem().toString();
         item = item_spinner.getSelectedItem().toString();

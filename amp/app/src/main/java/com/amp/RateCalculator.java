@@ -56,29 +56,51 @@ public class RateCalculator {
     private double rateForInternational(String type, String item, double weight) {
         if (type.equals(LETTER_POST)) {
             switch (item) {
+                // case of stamp
                 case STAMP:
-                    if (weight > 0 && weight <= 30) return 1.20;
-                    else if (weight > 30 && weight <= 50) return 1.80;
+                    // INTERNATIONAL, LETTER-POST, UP TO 30
+                    if (weight > 0 && weight <= 30) return 2.50;
+                        // over 30, up to 50
+                    else if (weight > 30 && weight <= 50) return 3.60;
+
+                    break;
+
                 case METER_OR_POSTALINDICIA:
-                    // USA, standard, meter or postal Indicia, Up to 30 g
-                    if (weight > 0 && weight <= 30) return 1.19;
-                    else if (weight > 30 && weight <= 50) return 1.72;
+                    // INTERNATIONAL, LETTER POST, meter or postal Indicia, Up to 30 g
+                    if (weight > 0 && weight <= 30) return 2.36;
+                    // over 30, up to 50
+                    else if (weight > 30 && weight <= 50) return 3.42;
+                    break;
             }
         } else if (type.equals(OTHER)) {
             switch (item) {
                 case STAMP:
-                    if (weight > 50 && weight <= 100) return 2.95;
-                    else if (weight > 100 && weight <= 200) return 5.15;
-                    else if (weight > 200 && weight <= 500) return 10.30;
+                    // INTERNATIONAL, OTHER,STAMP, OVER 50 UP TO 100
+                    if (weight > 50 && weight <= 100) return 5.90;
+
+                    // OVER 100, UP TO 200
+                    else if (weight > 100 && weight <= 200) return 10.30;
+                    // OVER 200 UP TO 500
+                    else if (weight > 200 && weight <= 500) return 20.60;
                     break;
+
+
+
+
+
                 case METER_OR_POSTALINDICIA:
-                    if (weight > 50 && weight <= 100) return 2.68;
-                    else if (weight > 100 && weight <= 200) return 4.85;
-                    else if (weight > 200 && weight <= 500) return 9.69;
+                    // INTERNATIONAL, OTHER, METER OR POSTAL INDICIA OVER 50 up to 100
+                    if (weight > 50 && weight <= 100) return 5.56;
+
+                    // OVER 100 UP TO 200
+                    else if (weight > 100 && weight <= 200) return 9.69;
+                    // OVER 200 UP TO 500
+                    else if (weight > 200 && weight <= 500) return 19.39;
                     break;
             }
         }
         throw new InvalidParameterException(WEIGHT_EXCEPTION);
+
     }
 
     private double rateForUSA(String type, String item, double weight) {

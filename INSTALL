@@ -1,3 +1,14 @@
+Assignment B for SEP Winter 2017 
+Samuel Fostine 260586688
+Sangmoon Hwang 260569675 
+
+
+The assignment implemented the postal rate that is on the following webpage: 
+https://www.canadapost.ca/cpo/mc/personal/ratesprices/postalprices.jsf?LOCALE=en
+
+The source code is in amp/app/src and the screenshots of the tests are in the folder called Screenshots
+
+
 The application is only executable if installed correctly.
 --Running it on emulator:
 1. Open up an Android studio or an eclipse which supports Android development
